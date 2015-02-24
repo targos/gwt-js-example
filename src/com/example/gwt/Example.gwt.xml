@@ -1,0 +1,8 @@
+<module rename-to="example">
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User'/>
+	
+    <source path="js"/>
+    <entry-point class="com.example.gwt.js.Example" />
+    <set-property name="user.agent" value="safari" />
+</module>

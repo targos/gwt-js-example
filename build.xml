@@ -1,0 +1,27 @@
+<project name="gwt-js-example" default="all-min">
+    	<target name="compile-min">
+		<exec failonerror="true" executable="gulp">
+			<arg line="compile:min" />
+		</exec>
+	</target>
+	<target name="compile">
+		<exec failonerror="true" executable="gulp">
+			<arg line="compile:pretty" />
+		</exec>
+	</target>
+	<target name="export">
+		<exec failonerror="true" executable="gulp">
+			<arg line="export" />
+		</exec>
+	</target>
+	<target name="all-min">
+		<exec failonerror="true" executable="gulp">
+			<arg line="build:min" />
+		</exec>
+	</target>
+	<target name="all">
+		<exec failonerror="true" executable="gulp">
+			<arg line="build:pretty" />
+		</exec>
+	</target>
+</project>
