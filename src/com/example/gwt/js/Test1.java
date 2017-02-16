@@ -5,7 +5,7 @@ import com.google.gwt.core.client.js.JsNamespace;
 import com.google.gwt.core.client.js.JsType;
 
 @JsType
-@JsNamespace("$wnd.example")
+@JsNamespace("example")
 @JsExport
 public class Test1 {
 	

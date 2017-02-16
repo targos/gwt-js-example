@@ -1,45 +1,42 @@
 /**
  * example - Example
  * @version v1.0.0
- * @date 2015-02-24T09:55:13.840Z
+ * @date 2015-09-30T12:04:53.374Z
 */
-function getExports($wnd) {
+(function () {
+    'use strict';
 
-    var $doc = $wnd.document;
-    var $gwt = {};
-    var navigator = {
-        userAgent: 'webkit'
-    };
+    function getExports($wnd) {
 
-    function noop(){}
+        var $doc = $wnd.document;
+        var $gwt = {};
+        var navigator = {
+            userAgent: 'webkit'
+        };
 
-    var __gwtModuleFunction = noop;
-    __gwtModuleFunction.__moduleStartupDone = noop;
-    var $sendStats = noop;
+        function noop(){}
 
-    // Start GWT code 
+        var __gwtModuleFunction = noop;
+        __gwtModuleFunction.__moduleStartupDone = noop;
+        var $sendStats = noop;
+        var $moduleName, $moduleBase;
 
-var $intern_0 = {3:1, 4:1}, $intern_1 = 4194303;
+        // Start GWT code 
+
+var $intern_0 = {3:1, 4:1};
 var _, initFnList_0, prototypesByTypeId_0 = {}, permutationId = -1;
 function typeMarkerFn(){
 }
 
-function provide(namespace){
-  var cur = this;
-  if (namespace == '$wnd') {
-    return $wnd;
-  }
-   else if (namespace === '') {
+function provide(namespace, optCtor){
+  var cur = $wnd;
+  if (namespace === '') {
     return cur;
-  }
-  if (namespace.substring(0, 5) == '$wnd.') {
-    cur = $wnd;
-    namespace = namespace.substring(5);
   }
   var parts = namespace.split('.');
   !(parts[0] in cur) && cur.execScript && cur.execScript('var ' + parts[0]);
   for (var part; parts.length && (part = parts.shift());) {
-    cur[part]?(cur = cur[part]):(cur = cur[part] = {});
+    cur[part]?(cur = cur[part]):(cur = cur[part] = optCtor || {});
   }
   return cur;
 }
@@ -60,45 +57,31 @@ function modernizeBrowser(){
   );
 }
 
-function maybeGetClassLiteralFromPlaceHolder_0(entry){
-  return entry instanceof Array?entry[0]:null;
-}
-
 function emptyMethod(){
 }
 
-function defineClass(typeId, superTypeId, castableTypeMap){
-  var prototypesByTypeId = prototypesByTypeId_0;
-  var createSubclassPrototype = createSubclassPrototype_0;
-  var maybeGetClassLiteralFromPlaceHolder = maybeGetClassLiteralFromPlaceHolder_0;
+function defineClass(typeId, superTypeIdOrPrototype, castableTypeMap){
+  var prototypesByTypeId = prototypesByTypeId_0, superPrototype;
   var prototype_0 = prototypesByTypeId[typeId];
-  var clazz = maybeGetClassLiteralFromPlaceHolder(prototype_0);
+  var clazz = prototype_0 instanceof Array?prototype_0[0]:null;
   if (prototype_0 && !clazz) {
     _ = prototype_0;
   }
    else {
-    _ = prototypesByTypeId[typeId] = !superTypeId?{}:createSubclassPrototype(superTypeId);
-    _.castableTypeMap$ = castableTypeMap;
+    _ = (superPrototype = superTypeIdOrPrototype && superTypeIdOrPrototype.prototype , !superPrototype && (superPrototype = prototypesByTypeId_0[superTypeIdOrPrototype]) , portableObjCreate(superPrototype));
+    _.castableTypeMap = castableTypeMap;
     _.constructor = _;
-    !superTypeId && (_.typeMarker$ = typeMarkerFn);
+    !superTypeIdOrPrototype && (_.typeMarker = typeMarkerFn);
+    prototypesByTypeId[typeId] = _;
   }
   for (var i = 3; i < arguments.length; ++i) {
     arguments[i].prototype = _;
   }
-  clazz && (_.___clazz$ = clazz);
-}
-
-function createSubclassPrototype_0(superTypeId){
-  var prototypesByTypeId = prototypesByTypeId_0;
-  return portableObjCreate(prototypesByTypeId[superTypeId]);
+  clazz && (_.___clazz = clazz);
 }
 
 function setGwtProperty(propertyName, propertyValue){
   typeof window === 'object' && typeof window['$gwt'] === 'object' && (window['$gwt'][propertyName] = propertyValue);
-}
-
-function registerEntry(){
-  return entry_0;
 }
 
 function gwtOnLoad_0(errFn, modName, modBase, softPermutationId){
@@ -142,27 +125,26 @@ function Object_0(){
 }
 
 function getClass__Ljava_lang_Class___devirtual$(this$static){
-  return isJavaString(this$static)?Ljava_lang_String_2_classLit:hasJavaObjectVirtualDispatch(this$static)?this$static.___clazz$:isJavaArray(this$static)?this$static.___clazz$:Lcom_google_gwt_core_client_JavaScriptObject_2_classLit;
+  return isJavaString(this$static)?Ljava_lang_String_2_classLit:hasJavaObjectVirtualDispatch(this$static)?this$static.___clazz:isJavaArray(this$static)?this$static.___clazz:Lcom_google_gwt_core_client_JavaScriptObject_2_classLit;
 }
 
 defineClass(1, null, {}, Object_0);
-_.getClass$ = function getClass_0(){
-  return this.___clazz$;
+_.getClass_0 = function getClass_0(){
+  return this.___clazz;
 }
 ;
-_.hashCode$ = function hashCode_0(){
-  return getHashCode(this);
+_.hashCode = function hashCode_0(){
+  return getObjectIdentityHashCode(this);
 }
 ;
-_.toString$ = function toString_0(){
-  return $getName(getClass__Ljava_lang_Class___devirtual$(this)) + '@' + ((isJavaString(this)?getHashCode_0(this):hasJavaObjectVirtualDispatch(this)?this.hashCode$():isJavaArray(this)?getHashCode(this):getHashCode(this)) >>> 0).toString(16);
+_.toString_0 = function toString_0(){
+  return $getName(getClass__Ljava_lang_Class___devirtual$(this)) + '@' + ((isJavaString(this)?getHashCode(this):hasJavaObjectVirtualDispatch(this)?this.hashCode():isJavaArray(this)?getObjectIdentityHashCode(this):getObjectIdentityHashCode(this)) >>> 0).toString(16);
 }
 ;
 _.toString = function(){
-  return this.toString$();
+  return this.toString_0();
 }
 ;
-stringCastMap = {3:1, 53:1, 73:1, 2:1};
 modernizeBrowser();
 function $ensureNamesAreInitialized(this$static){
   if (this$static.typeName != null) {
@@ -250,10 +232,10 @@ function maybeSetClassLiteral(typeId, clazz){
     prototypesByTypeId_0[typeId] = [clazz];
     return;
   }
-  prototype_0.___clazz$ = clazz;
+  prototype_0.___clazz = clazz;
 }
 
-defineClass(19, 1, {}, Class);
+defineClass(8, 1, {}, Class);
 _.createClassLiteralForArray = function createClassLiteralForArray(dimensions){
   var clazz;
   clazz = new Class;
@@ -284,63 +266,69 @@ _.isPrimitive = function isPrimitive(){
   return (this.modifiers & 1) != 0;
 }
 ;
-_.toString$ = function toString_2(){
+_.toString_0 = function toString_2(){
   return ((this.modifiers & 2) != 0?'interface ':(this.modifiers & 1) != 0?'':'class ') + ($ensureNamesAreInitialized(this) , this.typeName);
 }
 ;
 _.modifiers = 0;
 _.sequentialId = 0;
 var nextSequentialId = 1;
-var Ljava_lang_Object_2_classLit = createForClass(1), Lcom_google_gwt_core_client_JavaScriptObject_2_classLit = createForClass(0), Ljava_lang_Class_2_classLit = createForClass(19);
+function $clinit_String(){
+  $clinit_String = emptyMethod;
+  new String$1;
+}
+
+function $charAt(this$static, index_0){
+  return this$static.charCodeAt(index_0);
+}
+
+function $equals(this$static, other){
+  return this$static === other;
+}
+
+stringCastMap = {3:1, 31:1, 30:1, 2:1};
+function String$1(){
+}
+
+defineClass(12, 1, {}, String$1);
+var Ljava_lang_Object_2_classLit = createForClass(1);
+var Lcom_google_gwt_core_client_JavaScriptObject_2_classLit = createForClass(0);
+var Ljava_lang_Class_2_classLit = createForClass(8);
+var Ljava_lang_String_2_classLit = createForClass(2);
+var Ljava_lang_String$1_2_classLit = createForClass(12);
 function Test1(){
-  this.$init();
 }
 
 function hello(){
   return 'world';
 }
 
-defineClass(52, 1, {}, Test1);
-_.$init = function $init(){
-}
-;
-var Lcom_example_gwt_js_Test1_2_classLit = createForClass(52);
+defineClass(18, 1, {}, Test1);
+var Lcom_example_gwt_js_Test1_2_classLit = createForClass(18);
 function Test2(){
-  this.$init_0();
 }
 
-defineClass(54, 1, {}, Test2);
-_.$init_0 = function $init_0(){
-}
-;
+defineClass(19, 1, {}, Test2);
 _.test = function test_0(){
-  return this.testImpl();
-}
-;
-_.testImpl = function testImpl(){
   return 'TEST';
 }
 ;
-var Lcom_example_gwt_js_Test2_2_classLit = createForClass(54);
+var Lcom_example_gwt_js_Test2_2_classLit = createForClass(19);
 defineClass(4, 1, $intern_0);
 _.getMessage = function getMessage(){
   return this.detailMessage;
 }
 ;
-_.toString$ = function toString_1(){
+_.toString_0 = function toString_1(){
   var className, msg;
-  className = $getName(this.___clazz$);
-  msg = this.getMessage();
-  return msg != null?className + ': ' + msg:className;
+  return className = $getName(this.___clazz) , msg = this.getMessage() , msg != null?className + ': ' + msg:className;
 }
 ;
 var Ljava_lang_Throwable_2_classLit = createForClass(4);
-defineClass(13, 4, $intern_0);
-var Ljava_lang_Exception_2_classLit = createForClass(13);
-defineClass(6, 13, $intern_0);
-var Ljava_lang_RuntimeException_2_classLit = createForClass(6);
-defineClass(28, 6, $intern_0);
-var Lcom_google_gwt_core_client_impl_JavaScriptExceptionBase_2_classLit = createForClass(28);
+defineClass(9, 4, $intern_0);
+var Ljava_lang_Exception_2_classLit = createForClass(9);
+defineClass(10, 9, $intern_0);
+var Ljava_lang_RuntimeException_2_classLit = createForClass(10);
 function $clinit_JavaScriptException(){
   $clinit_JavaScriptException = emptyMethod;
   NOT_SET = new Object_0;
@@ -364,7 +352,7 @@ function JavaScriptException(e){
   this.description = '';
 }
 
-defineClass(9, 28, {9:1, 3:1, 4:1}, JavaScriptException);
+defineClass(6, 10, {6:1, 3:1, 4:1}, JavaScriptException);
 _.getMessage = function getMessage_0(){
   $ensureInit(this);
   return this.message_0;
@@ -375,7 +363,7 @@ _.getThrown = function getThrown(){
 }
 ;
 var NOT_SET;
-var Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass(9);
+var Lcom_google_gwt_core_client_JavaScriptException_2_classLit = createForClass(6);
 function now_1(){
   if (Date.now) {
     return Date.now();
@@ -383,8 +371,8 @@ function now_1(){
   return (new Date).getTime();
 }
 
-defineClass(55, 1, {});
-var Lcom_google_gwt_core_client_Scheduler_2_classLit = createForClass(55);
+defineClass(17, 1, {});
+var Lcom_google_gwt_core_client_Scheduler_2_classLit = createForClass(17);
 function apply_0(jsFunction, thisObj, args){
   return jsFunction.apply(thisObj, args);
   var __0;
@@ -406,7 +394,7 @@ function enter(){
   return false;
 }
 
-function entry_0(jsFunction){
+function entry(jsFunction){
   return function(){
     return entry0(jsFunction, this, arguments);
     var __0;
@@ -436,10 +424,6 @@ function exit(initialEntry){
   }
 }
 
-function getHashCode(o){
-  return o.$H || (o.$H = ++sNextHashId);
-}
-
 function reportToBrowser(e){
   $wnd.setTimeout(function(){
     throw e;
@@ -456,7 +440,7 @@ function watchdogEntryDepthRun(){
   watchdogEntryDepthTimerId = -1;
 }
 
-var entryDepth = 0, sNextHashId = 0, watchdogEntryDepthLastScheduled = 0, watchdogEntryDepthTimerId = -1;
+var entryDepth = 0, watchdogEntryDepthLastScheduled = 0, watchdogEntryDepthTimerId = -1;
 function $clinit_SchedulerImpl(){
   $clinit_SchedulerImpl = emptyMethod;
   INSTANCE = new SchedulerImpl;
@@ -504,13 +488,13 @@ function runScheduledTasks(tasks, rescheduled){
   for (i = 0 , j = tasks.length; i < j; i++) {
     t = tasks[i];
     try {
-      t[1]?t[0].nullMethod() && (rescheduled = push_0(rescheduled, t)):t[0].nullMethod();
+      t[1]?t[0].$_nullMethod() && (rescheduled = push_0(rescheduled, t)):t[0].$_nullMethod();
     }
      catch ($e0) {
       $e0 = wrap($e0);
       if (instanceOf($e0, 4)) {
         e = $e0;
-        reportToBrowser(instanceOf(e, 9)?e.getThrown():e);
+        reportToBrowser(instanceOf(e, 6)?e.getThrown():e);
       }
        else 
         throw unwrap($e0);
@@ -519,9 +503,9 @@ function runScheduledTasks(tasks, rescheduled){
   return rescheduled;
 }
 
-defineClass(47, 55, {}, SchedulerImpl);
+defineClass(16, 17, {}, SchedulerImpl);
 var INSTANCE;
-var Lcom_google_gwt_core_client_impl_SchedulerImpl_2_classLit = createForClass(47);
+var Lcom_google_gwt_core_client_impl_SchedulerImpl_2_classLit = createForClass(16);
 function $clinit_StackTraceCreator(){
   $clinit_StackTraceCreator = emptyMethod;
   var c, enforceLegacy;
@@ -542,19 +526,20 @@ function extractFunctionName(fnName){
 }
 
 var collector;
-defineClass(66, 1, {});
-var Lcom_google_gwt_core_client_impl_StackTraceCreator$Collector_2_classLit = createForClass(66);
+defineClass(28, 1, {});
+var Lcom_google_gwt_core_client_impl_StackTraceCreator$Collector_2_classLit = createForClass(28);
 function StackTraceCreator$CollectorLegacy(){
 }
 
-defineClass(29, 66, {}, StackTraceCreator$CollectorLegacy);
+defineClass(13, 28, {}, StackTraceCreator$CollectorLegacy);
 _.collect = function collect(t, thrownIgnored){
   var seen = {}, name_1;
-  t.fnStack = [];
+  var fnStack = [];
+  t.__gwt$backingJsError = {fnStack:fnStack};
   var callee = arguments.callee.caller;
   while (callee) {
     var name_0 = ($clinit_StackTraceCreator() , callee.name || (callee.name = extractFunctionName(callee.toString())));
-    t.fnStack.push(name_0);
+    fnStack.push(name_0);
     var keyName = ':' + name_0;
     var withThisName = seen[keyName];
     if (withThisName) {
@@ -570,13 +555,13 @@ _.collect = function collect(t, thrownIgnored){
   }
 }
 ;
-var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorLegacy_2_classLit = createForClass(29);
+var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorLegacy_2_classLit = createForClass(13);
 function $clinit_StackTraceCreator$CollectorModern(){
   $clinit_StackTraceCreator$CollectorModern = emptyMethod;
   Error.stackTraceLimit = 64;
 }
 
-defineClass(67, 66, {});
+defineClass(29, 28, {});
 _.collect = function collect_0(t, jsThrown){
   function fixIE(e){
     if (!('stack' in e)) {
@@ -590,76 +575,44 @@ _.collect = function collect_0(t, jsThrown){
   }
 
   var backingJsError;
-  typeof jsThrown == 'string'?(backingJsError = fixIE(new Error(jsThrown))):jsThrown instanceof Object && 'stack' in jsThrown?(backingJsError = jsThrown):(backingJsError = fixIE(new Error));
+  typeof jsThrown == 'string'?(backingJsError = fixIE(new Error(jsThrown.replace('\n', ' ')))):jsThrown && typeof jsThrown == 'object' && 'stack' in jsThrown?(backingJsError = jsThrown):(backingJsError = fixIE(new Error));
   t.__gwt$backingJsError = backingJsError;
 }
 ;
-var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorModern_2_classLit = createForClass(67);
+var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorModern_2_classLit = createForClass(29);
 function StackTraceCreator$CollectorModernNoSourceMap(){
   $clinit_StackTraceCreator$CollectorModern();
 }
 
-defineClass(30, 67, {}, StackTraceCreator$CollectorModernNoSourceMap);
-var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorModernNoSourceMap_2_classLit = createForClass(30);
+defineClass(14, 29, {}, StackTraceCreator$CollectorModernNoSourceMap);
+var Lcom_google_gwt_core_client_impl_StackTraceCreator$CollectorModernNoSourceMap_2_classLit = createForClass(14);
 function getClassLiteralForArray(clazz, dimensions){
   return getClassLiteralForArray_0(clazz, dimensions);
 }
 
-function initDim(leafClassLiteral, castableTypeMap, elementTypeId, length_0, elementTypeCategory, dimensions){
-  var result;
-  result = initializeArrayElementsWithDefaults(elementTypeCategory, length_0);
-  initValues(getClassLiteralForArray(leafClassLiteral, dimensions), castableTypeMap, elementTypeId, elementTypeCategory, result);
-  return result;
-}
-
 function initValues(arrayClass, castableTypeMap, elementTypeId, elementTypeCategory, array){
-  array.___clazz$ = arrayClass;
-  array.castableTypeMap$ = castableTypeMap;
-  array.typeMarker$ = typeMarkerFn;
+  array.___clazz = arrayClass;
+  array.castableTypeMap = castableTypeMap;
+  array.typeMarker = typeMarkerFn;
   array.__elementTypeId$ = elementTypeId;
   array.__elementTypeCategory$ = elementTypeCategory;
   return array;
 }
 
-function initializeArrayElementsWithDefaults(elementTypeCategory, length_0){
-  var array = new Array(length_0);
-  var initValue;
-  switch (elementTypeCategory) {
-    case 6:
-      initValue = {l:0, m:0, h:0};
-      break;
-    case 7:
-      initValue = 0;
-      break;
-    case 8:
-      initValue = false;
-      break;
-    default:return array;
-  }
-  for (var i = 0; i < length_0; ++i) {
-    array[i] = initValue;
-  }
-  return array;
-}
-
 function hasJavaObjectVirtualDispatch(src_0){
-  return !instanceofArray(src_0) && hasTypeMarker(src_0);
+  return !Array.isArray(src_0) && src_0.typeMarker === typeMarkerFn;
 }
 
 function instanceOf(src_0, dstId){
-  return src_0 != null && (isJavaString(src_0) && !!stringCastMap[dstId] || src_0.castableTypeMap$ && !!src_0.castableTypeMap$[dstId]);
+  return src_0 != null && (isJavaString(src_0) && !!stringCastMap[dstId] || src_0.castableTypeMap && !!src_0.castableTypeMap[dstId] || typeof src_0 === 'number' && !!doubleCastMap[dstId] || typeof src_0 === 'boolean' && !!booleanCastMap[dstId]);
 }
 
 function instanceOfJso(src_0){
-  return src_0 != null && !isJavaString(src_0) && !hasTypeMarker(src_0);
-}
-
-function instanceofArray(src_0){
-  return Array.isArray(src_0);
+  return src_0 != null && (typeof src_0 === 'object' || typeof src_0 === 'function') && !(src_0.typeMarker === typeMarkerFn);
 }
 
 function isJavaArray(src_0){
-  return instanceofArray(src_0) && hasTypeMarker(src_0);
+  return Array.isArray(src_0) && src_0.typeMarker === typeMarkerFn;
 }
 
 function isJavaString(src_0){
@@ -670,7 +623,7 @@ function maskUndefined(src_0){
   return src_0 == null?null:src_0;
 }
 
-var stringCastMap;
+var booleanCastMap, doubleCastMap, stringCastMap;
 function cacheJavaScriptException(e, jse){
   if (e && typeof e == 'object') {
     try {
@@ -683,7 +636,7 @@ function cacheJavaScriptException(e, jse){
 
 function unwrap(e){
   var jse;
-  if (instanceOf(e, 9)) {
+  if (instanceOf(e, 6)) {
     jse = e;
     if (maskUndefined(jse.e) !== maskUndefined(($clinit_JavaScriptException() , NOT_SET))) {
       return maskUndefined(jse.e) === maskUndefined(NOT_SET)?null:jse.e;
@@ -704,45 +657,6 @@ function wrap(e){
     cacheJavaScriptException(e, jse);
   }
   return jse;
-}
-
-function create(value_0){
-  var a0, a1, a2;
-  a0 = value_0 & $intern_1;
-  a1 = value_0 >> 22 & $intern_1;
-  a2 = value_0 < 0?1048575:0;
-  return create0(a0, a1, a2);
-}
-
-function create0(l, m, h){
-  return {l:l, m:m, h:h};
-}
-
-function fromInt(value_0){
-  var rebase, result;
-  if (value_0 > -129 && value_0 < 128) {
-    rebase = value_0 + 128;
-    boxedValues == null && (boxedValues = initDim(Lcom_google_gwt_lang_LongLibBase$LongEmul_2_classLit, {3:1}, 76, 256, 0, 1));
-    result = boxedValues[rebase];
-    !result && (result = boxedValues[rebase] = create(value_0));
-    return result;
-  }
-  return create(value_0);
-}
-
-var boxedValues;
-function $clinit_LongLib$Const(){
-  $clinit_LongLib$Const = emptyMethod;
-  MAX_VALUE = create0($intern_1, $intern_1, 524287);
-  MIN_VALUE = create0(0, 0, 524288);
-  fromInt(1);
-  fromInt(2);
-  ZERO = fromInt(0);
-}
-
-var MAX_VALUE, MIN_VALUE, ZERO;
-function hasTypeMarker(o){
-  return o.typeMarker$ === typeMarkerFn;
 }
 
 function init(){
@@ -772,19 +686,21 @@ function assertCompileTimeUserAgent(){
 
 function Error_0(message){
   this.detailMessage = message;
+  this.stackTrace = null;
   captureStackTrace(this, this.detailMessage);
 }
 
-defineClass(14, 4, $intern_0);
-var Ljava_lang_Error_2_classLit = createForClass(14);
-defineClass(5, 14, $intern_0);
+defineClass(7, 4, $intern_0);
+var Ljava_lang_Error_2_classLit = createForClass(7);
+defineClass(5, 7, $intern_0);
 var Ljava_lang_AssertionError_2_classLit = createForClass(5);
 function UserAgentAsserter$UserAgentAssertionError(runtimeValue){
-  Error_0.call(this, '' + ('Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.'), instanceOf('Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.', 4)?'Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.':null);
+  var lastArg;
+  Error_0.call(this, (lastArg = ($clinit_String() , '' + ('Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.')) , instanceOf('Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.', 4)?'Possible problem with your *.gwt.xml module file.\nThe compile time user.agent value (safari) does not match the runtime user.agent value (' + runtimeValue + ').\n' + 'Expect more errors.':null , lastArg));
 }
 
-defineClass(27, 5, $intern_0, UserAgentAsserter$UserAgentAssertionError);
-var Lcom_google_gwt_useragent_client_UserAgentAsserter$UserAgentAssertionError_2_classLit = createForClass(27);
+defineClass(11, 5, $intern_0, UserAgentAsserter$UserAgentAssertionError);
+var Lcom_google_gwt_useragent_client_UserAgentAsserter$UserAgentAssertionError_2_classLit = createForClass(11);
 function $getRuntimeValue(){
   var ua = navigator.userAgent.toLowerCase();
   var docMode = $doc.documentMode;
@@ -816,17 +732,13 @@ function $getRuntimeValue(){
   return 'unknown';
 }
 
-function $charAt(this$static, index_0){
-  return this$static.charCodeAt(index_0);
+function getObjectIdentityHashCode(o){
+  return o.$H || (o.$H = ++sNextHashId);
 }
 
-function $equals(this$static, other){
-  return this$static === other;
-}
-
-var Ljava_lang_String_2_classLit = createForClass(2);
-function $clinit_String$HashCache(){
-  $clinit_String$HashCache = emptyMethod;
+var sNextHashId = 0;
+function $clinit_StringHashCache(){
+  $clinit_StringHashCache = emptyMethod;
   back_0 = {};
   front = {};
 }
@@ -839,27 +751,29 @@ function compute(str){
   i = 0;
   while (i < nBatch) {
     hashCode = str.charCodeAt(i + 3) + 31 * (str.charCodeAt(i + 2) + 31 * (str.charCodeAt(i + 1) + 31 * (str.charCodeAt(i) + 31 * hashCode)));
-    hashCode = ~~hashCode;
+    hashCode = hashCode | 0;
     i += 4;
   }
   while (i < n) {
     hashCode = hashCode * 31 + $charAt(str, i++);
   }
-  hashCode = ~~hashCode;
+  hashCode = hashCode | 0;
   return hashCode;
 }
 
-function getHashCode_0(str){
-  $clinit_String$HashCache();
-  var key = ':' + str;
-  var result = front[key];
-  if (result != null) {
+function getHashCode(str){
+  $clinit_StringHashCache();
+  var hashCode, key, result;
+  key = ':' + str;
+  result = front[key];
+  if (!(result === undefined)) {
     return result;
   }
   result = back_0[key];
-  result == null && (result = compute(str));
+  hashCode = result === undefined?compute(str):result;
   increment();
-  return front[key] = result;
+  front[key] = hashCode;
+  return hashCode;
 }
 
 function increment(){
@@ -872,10 +786,10 @@ function increment(){
 }
 
 var back_0, count = 0, front;
-var Lcom_google_gwt_lang_CollapsedPropertyHolder_2_classLit = createForClass(57), Lcom_google_gwt_lang_JavaClassHierarchySetupUtil_2_classLit = createForClass(59), Lcom_google_gwt_lang_LongLibBase$LongEmul_2_classLit = createForClass(null), Lcom_google_gwt_lang_ModuleUtils_2_classLit = createForClass(62);
-_ = provide('$wnd.example.Test1');
+_ = provide('example.TEST3', Test2);
+_ = provide('example.Test1', Test1);
 _.hello = hello;
-var $entry = registerEntry();
+var $entry = entry;
 var gwtOnLoad = gwtOnLoad = gwtOnLoad_0;
 addInitFunctions(init);
 setGwtProperty('permProps', [[['locale', 'default'], ['user.agent', 'safari']]]);
@@ -886,46 +800,57 @@ $gwt && $gwt.permProps && __gwtModuleFunction.__moduleStartupDone($gwt.permProps
 //# sourceURL=example-0.js
 
 
-    // End GWT code
+        // End GWT code
 
-    var toReturn = $wnd["example"];
+        var toReturn = $wnd["example"];
 
-    toReturn.version = '1.0.0';
+        toReturn.version = '1.0.0';
 
-    return toReturn;
-}
+        return toReturn;
+    }
 
-(function loadFromGWT() {
+    var isBrowser, globalEnv;
 
-    var fakeWindow = {};
+    if (typeof window !== 'undefined') { // usual browser window
+        isBrowser = true;
+        globalEnv = window;
+    } else if (typeof self !== 'undefined') { // Web Worker
+        isBrowser = true;
+        globalEnv = self;
+    } else { // Node.js
+        isBrowser = false;
+        globalEnv = global;
+    }
+
+    var fakeWindow;
+    if (isBrowser && !true) {
+        fakeWindow = globalEnv;
+    } else {
+        fakeWindow = {};
+        fakeWindow.setTimeout = globalEnv.setTimeout.bind(globalEnv);
+        fakeWindow.clearTimeout = globalEnv.clearTimeout.bind(globalEnv);
+        fakeWindow.setInterval = globalEnv.setInterval.bind(globalEnv);
+        fakeWindow.clearInterval = globalEnv.clearInterval.bind(globalEnv);
+    }
+
+    if (!fakeWindow.document) {
+        fakeWindow.document = {};
+    }
 
     if (typeof module !== 'undefined' && module.exports) { // NodeJS
-        var timers = require('timers');
-        fakeWindow.setTimeout = timers.setTimeout;
-        fakeWindow.clearTimeout = timers.clearTimeout;
-        fakeWindow.document = {};
         module.exports = getExports(fakeWindow);
-    } else { // Browser
-        fakeWindow.setTimeout = function () {
-            return window.setTimeout.apply(window, arguments);
-        };
-        fakeWindow.clearTimeout = function () {
-            return window.clearTimeout.apply(window, arguments);
-        };
-        fakeWindow.document = window.document;
-        if (typeof define === 'function' && define.amd) { // AMD
-            define(function () {
-                return getExports(fakeWindow);
-            });
-        } else { // Global
-            var path = ["example"],
-                l = path.length - 1,
-                obj = window;
-            for (var i = 0; i < l; i++) {
-                obj = obj[path[i]] || (obj[path[i]] = {});
-            }
-            obj[path[l]] = getExports(fakeWindow);
+    } else if (typeof define === 'function' && define.amd) { // AMD
+        define(function () {
+            return getExports(fakeWindow);
+        });
+    } else { // Global
+        var path = ["example"];
+        var l = path.length - 1;
+        var obj = globalEnv;
+        for (var i = 0; i < l; i++) {
+            obj = obj[path[i]] || (obj[path[i]] = {});
         }
+        obj[path[l]] = getExports(fakeWindow);
     }
 
 })();
